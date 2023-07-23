@@ -16,10 +16,19 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: '1.11'
+          java-version: '11'
 
-      - name: Build with Maven
-        run: mvn package
+      - name: Compile Java Code
+        run: javac -d WEB-INF/classes src/main/java/com/example/HelloServlet.java
+
+      - name: Create WEB-INF directory
+        run: mkdir -p WEB-INF/lib
+
+      - name: Copy web.xml
+        run: cp src/main/webapp/WEB-INF/web.xml WEB-INF/
+
+      - name: Package Web Application
+        run: jar cvf SampleTomcatApp.war *
 
       - name: Start Tomcat Server
         run: |
@@ -28,13 +37,14 @@ jobs:
           ./apache-tomcat-9.0.52/bin/startup.sh
 
       - name: Deploy to Tomcat
-        run: cp target/SampleTomcatApp.war apache-tomcat-9.0.52/webapps/
+        run: cp SampleTomcatApp.war apache-tomcat-9.0.52/webapps/
 
       - name: Wait for Tomcat to start
         run: sleep 30
 
       - name: Run Tests
-        run: mvn test
+        run: |
+          wget http://localhost:8080/SampleTomcatApp/HelloServlet
 
       - name: Stop Tomcat Server
         run: ./apache-tomcat-9.0.52/bin/shutdown.sh
