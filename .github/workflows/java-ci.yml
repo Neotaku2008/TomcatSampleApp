@@ -19,7 +19,7 @@ jobs:
           java-version: '11'
 
       - name: Compile Java Code
-        run: javac -d WEB-INF/classes src/main/java/com/example/HelloServlet.java
+        run: javac -cp "lib/*" -d WEB-INF/classes src/main/java/com/example/HelloServlet.java
 
       - name: Create WEB-INF directory
         run: mkdir -p WEB-INF/lib
@@ -32,7 +32,7 @@ jobs:
 
       - name: Start Tomcat Server
         run: |
-          wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.52/bin/apache-tomcat-9.0.52.tar.gz
+          wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.52/bin/apache-tomcat-9.0.52.tar.gz
           tar -xzvf apache-tomcat-9.0.52.tar.gz
           ./apache-tomcat-9.0.52/bin/startup.sh
 
