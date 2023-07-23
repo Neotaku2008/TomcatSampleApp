@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.lang.management.ManagementFactory;
 import java.lang.management.MemoryMXBean;
 import java.lang.management.MemoryUsage;
+import java.lang.management.OperatingSystemMXBean;
+//import java.lang.management.RuntimeMXBean;
 import java.io.File;
 
 public class HelloServlet extends HttpServlet {
@@ -72,6 +74,11 @@ public class HelloServlet extends HttpServlet {
         long freeSpace = file.getFreeSpace() / (1024 * 1024 * 1024); // Convertir a GB
         out.println("<p>Espacio en disco total: " + totalSpace + " GB</p>");
         out.println("<p>Espacio en disco libre: " + freeSpace + " GB</p>");
+
+        // Obtener el porcentaje de uso del procesador
+        OperatingSystemMXBean osBean = ManagementFactory.getOperatingSystemMXBean();
+        double cpuUsage = osBean.getSystemLoadAverage();
+        out.println("<p>Porcentaje de uso del procesador: " + cpuUsage + "</p>");
 
         out.println("</div>");
 
