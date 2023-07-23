@@ -19,7 +19,7 @@ jobs:
           java-version: '11'
 
       - name: Compile Java Code
-        run: javac -d WEB-INF/classes src/main/java/com/example/HelloServlet.java
+        run: javac -cp "lib/*" -d WEB-INF/classes src/main/java/com/example/HelloServlet.java
 
       - name: Create WEB-INF directory
         run: mkdir -p WEB-INF/lib
